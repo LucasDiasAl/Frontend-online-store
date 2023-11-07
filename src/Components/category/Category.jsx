@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import './category.css';
+
 class Category extends Component {
   render() {
     const { handleCategory, categorias } = this.props;
     return (
-      <div>
+      <div className="categories">
         {
           categorias.map(({ id, name }) => (
             <label

@@ -1,4 +1,11 @@
+:root {
+  --amarelo-midia: rgb(252, 252, 59);
+  --base-cinza: rgb(43, 43, 43);
+  --base-branco: aliceblue;
+}
+
 body {
+  background-color: var(--base-branco);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
