@@ -1,13 +1,15 @@
 .categories {
+  height: 100%;
   left: 1;
-  margin: 0.5vw 0vw 0vw 0.5vw;
-  padding-right: 1vw;
+  padding: 0.5vw;
   position: fixed;
   display: flex;
   flex-direction: column;
   gap: 3.5px;
   align-items: flex-start;
   overflow: auto;
+  background-color: var(--base-cinza);
+  box-shadow: 5px 0px 10px rgba(5, 5, 5, 0.993);
 }
 
 .categories > label {

@@ -3,31 +3,40 @@ import { Link } from 'react-router-dom';
 import qtdAll from '../../services/qtdPlus';
 import { getProductsFromCategoryAndQuery, getCategories } from '../../services/api';
 import Category from '../category/Category';
-import CartSVG from '../../SVG/cartSvg';
+import CartSVG from '../../SVG/cartSVG';
+import LoadingSVG from '../../SVG/loading/loadingSVG';
 
 import './home.css';
 
 export default class Home extends React.Component {
   state = {
     search: '',
+    selectedCategory: '',
     productsApi: [],
     categorias: [],
+    searchHappened: false,
   };
 
   componentDidMount() {
     getCategories().then((response) => this.setState({ categorias: response }));
   }
 
-  handleSearch = ({ target }) => {
+  handleSearchInput = ({ target }) => {
     const { value } = target;
     this.setState({ search: value });
   };
 
+  handleSearch = async () => {
+    const { search, selectedCategory } = this.state;
+    console.log(selectedCategory, 2, search);
+    const response = await getProductsFromCategoryAndQuery(selectedCategory, search);
+    this.setState({ productsApi: response.results, searchHappened: true });
+  };
+
   handleCategory = async ({ target }) => {
-    const { search } = this.state;
-    const { value } = target;
-    const response = await getProductsFromCategoryAndQuery(value, search);
-    this.setState({ productsApi: response.results });
+    const { value, name } = target;
+    console.log(value, name);
+    this.setState({ selectedCategory: value }, () => this.handleSearch());
   };
 
   addToCart = ({ target: { value } }) => {
@@ -41,7 +50,9 @@ export default class Home extends React.Component {
   };
 
   render() {
-    const { search, productsApi, categorias } = this.state;
+    const { search, productsApi, categorias, searchHappened } = this.state;
+    const paragraph = searchHappened === true ? 'Nenhum produto foi encontrado'
+      : 'Digite algum termo de pesquisa ou escolha uma categoria.';
     return (
       <div className="home">
         <div className="home__header">
@@ -52,12 +63,12 @@ export default class Home extends React.Component {
               placeholder="Search"
               data-testid="query-input"
               search={ search }
-              onChange={ this.handleSearch }
+              onChange={ this.handleSearchInput }
             />
             <button
               type="submit"
               data-testid="query-button"
-              onClick={ this.handleCategory }
+              onClick={ this.handleSearch }
             >
               Pesquisar
             </button>
@@ -71,20 +82,7 @@ export default class Home extends React.Component {
         </div>
         <div className="home__main">
           <div className="display__items">
-            <div>
-              { productsApi.length === 0
-          && (
-            <div>
-              <p
-                data-testid="home-initial-message"
-              >
-                Digite algum termo de pesquisa ou escolha uma categoria.
-              </p>
-            </div>
-          )}
-            </div>
-
-            { productsApi.length === 0 ? <p>Nenhum produto foi encontrado</p>
+            { productsApi.length === 0 ? <p>{`${paragraph}`}</p>
               : (
                 <ul>
                   {productsApi.map((product) => (

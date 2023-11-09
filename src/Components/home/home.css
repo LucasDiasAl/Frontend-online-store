@@ -79,10 +79,8 @@
 
 .categories__items {
   height: 100vh;
-  background-color: var(--base-cinza);
   left: 0;
   width: 20%;
-  box-shadow: 5px 0px 10px rgba(5, 5, 5, 0.993);
 }
 
 .display__items {
