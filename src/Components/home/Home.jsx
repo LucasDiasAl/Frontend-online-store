@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import qtdAll from '../../services/qtdPlus';
 import { getProductsFromCategoryAndQuery, getCategories } from '../../services/api';
 import Category from '../category/Category';
 import CartSVG from '../../SVG/cartSVG';
 import LoadingSVG from '../../SVG/loading/loadingSVG';
+import DisplayItems from '../displayItems/DisplayItems';
 
 import './home.css';
 
@@ -12,6 +12,7 @@ export default class Home extends React.Component {
   state = {
     search: '',
     selectedCategory: '',
+    loading: false,
     productsApi: [],
     categorias: [],
     searchHappened: false,
@@ -29,13 +30,16 @@ export default class Home extends React.Component {
   handleSearch = async () => {
     const { search, selectedCategory } = this.state;
     console.log(selectedCategory, 2, search);
+    this.setState({ loading: true });
     const response = await getProductsFromCategoryAndQuery(selectedCategory, search);
-    this.setState({ productsApi: response.results, searchHappened: true });
+    this.setState({
+      productsApi: response.results,
+      searchHappened: true,
+      loading: false });
   };
 
   handleCategory = async ({ target }) => {
-    const { value, name } = target;
-    console.log(value, name);
+    const { value } = target;
     this.setState({ selectedCategory: value }, () => this.handleSearch());
   };
 
@@ -50,9 +54,14 @@ export default class Home extends React.Component {
   };
 
   render() {
-    const { search, productsApi, categorias, searchHappened } = this.state;
+    const { search, productsApi, categorias, searchHappened, loading } = this.state;
     const paragraph = searchHappened === true ? 'Nenhum produto foi encontrado'
       : 'Digite algum termo de pesquisa ou escolha uma categoria.';
+    const displatSection = loading === false ? (
+      <DisplayItems
+        addToCart={ this.addToCart }
+        productsApi={ productsApi }
+      />) : <LoadingSVG />;
     return (
       <div className="home">
         <div className="home__header">
@@ -83,42 +92,7 @@ export default class Home extends React.Component {
         <div className="home__main">
           <div className="display__items">
             { productsApi.length === 0 ? <p>{`${paragraph}`}</p>
-              : (
-                <ul>
-                  {productsApi.map((product) => (
-                    <li
-                      data-testid="product"
-                      key={ product.id }
-                    >
-                      <div>
-                        {product.shipping.free_shipping
-                    && (<p data-testid="free-shipping">Frete grátis</p>)}
-                      </div>
-                      <Link
-                        to={ `/Products/${product.id}` }
-                        data-testid="product-detail-link"
-                      >
-                        <p>
-                          { product.title }
-                        </p>
-                        <img src={ product.thumbnail } alt={ product.title } />
-                        <p />
-                        <p>
-                          { product.price }
-                        </p>
-                      </Link>
-                      <button
-                        type="button"
-                        data-testid="product-add-to-cart"
-                        value={ product.id }
-                        onClick={ this.addToCart }
-                      >
-                        Adicionar ao Carrinho
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              : displatSection}
 
           </div>
           <div className="categories__items">

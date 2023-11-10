@@ -1,0 +1,121 @@
+.list__items {
+  justify-content: center;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  max-width: 15vw;
+}
+
+.free__shipping__badge {
+  background-color: #4caf50;
+  color: #fff;
+  border-radius: 6px;
+  width: 70%;
+  height: 40px;
+  padding: 4px 8px;
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.product__link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.product__title {
+  font-size: 18px;
+  font-weight: bold;
+  overflow: hidden;
+  max-height: 3.3rem;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.HoverCardContent {
+  border-radius: 6px;
+  padding: 2px;
+  width: max-content;
+  background-color: var(--amarelo-midia);
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.HoverCardContent[data-side='right'] {
+  animation-name: slideLeftAndFade;
+}
+
+.HoverCardContent[data-side='left'] {
+  animation-name: slideRightAndFade;
+}
+
+@keyframes slideRightAndFade {
+  0% {
+    opacity: 0;
+    transform: translateX(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideLeftAndFade {
+  0% {
+    opacity: 0;
+    transform: translateX(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.HoverCardArrow {
+  fill: var(--amarelo-midia);
+}
+
+.product__title:hover {
+  color: rgb(179, 179, 1);
+}
+
+.product__image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+.product__price {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.add__to__cart__button {
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.add__to__cart__button:hover {
+  background-color: #1976d2;
+}

@@ -5,6 +5,7 @@
 
 .home__header {
   top: 0;
+  z-index: 3;
   position: sticky;
   background-color: var(--amarelo-midia);
   display: flex;
@@ -70,21 +71,22 @@
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .display__items {
   flex-grow: 2;
-  width: 70%;
+  max-width: 80vw;
 }
 
 .categories__items {
   height: 100vh;
   left: 0;
-  width: 20%;
+  max-width: 20%;
 }
 
 .display__items {
-  margin-top: 20vh;
+  margin-top: 5vh;
   display: flex;
   align-items: center;
   justify-content: flex-start;

@@ -1,12 +1,15 @@
 :root {
-  --amarelo-midia: rgb(252, 252, 59);
-  --base-cinza: rgb(43, 43, 43);
-  --base-branco: aliceblue;
+  --amarelo-midia: #ffe629;
+  --base-cinza: #111113;
+  --base-branco: #fdfffeed;
 }
 
 body {
   background-color: var(--base-branco);
   margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
