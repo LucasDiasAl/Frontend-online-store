@@ -3,7 +3,7 @@
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 2rem;
 }
 
 .product__item {
@@ -13,9 +13,10 @@
   justify-content: flex-end;
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 20px;
+  padding: 1rem;
   text-align: center;
-  max-width: 15vw;
+  width: 12rem;
+  height: 16rem;
 }
 
 .free__shipping__badge {
@@ -23,9 +24,9 @@
   color: #fff;
   border-radius: 6px;
   width: 70%;
-  height: 40px;
+  height: 20rem;
   padding: 4px 8px;
-  font-size: 20pt;
+  font-size: 1.4rem;
   font-weight: bold;
 }
 
@@ -35,10 +36,12 @@
 }
 
 .product__title {
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: bold;
   overflow: hidden;
-  max-height: 3.3rem;
+  max-height: 2.8rem;
+  width: 10rem;
+  white-space: nowrap;
   text-overflow: ellipsis;
   word-break: break-word;
 }
@@ -50,39 +53,6 @@
   background-color: var(--amarelo-midia);
   box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
     hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
-  animation-duration: 400ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
-}
-
-.HoverCardContent[data-side='right'] {
-  animation-name: slideLeftAndFade;
-}
-
-.HoverCardContent[data-side='left'] {
-  animation-name: slideRightAndFade;
-}
-
-@keyframes slideRightAndFade {
-  0% {
-    opacity: 0;
-    transform: translateX(-2px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideLeftAndFade {
-  0% {
-    opacity: 0;
-    transform: translateX(2px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
 }
 
 .HoverCardArrow {
@@ -106,8 +76,8 @@
 }
 
 .add__to__cart__button {
-  background-color: #2196f3;
-  color: #fff;
+  background-color: var(--amarelo-midia);
+  color: var(--base-cinza);
   border: none;
   border-radius: 6px;
   padding: 8px 16px;
