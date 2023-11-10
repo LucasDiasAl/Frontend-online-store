@@ -10,20 +10,23 @@ class Category extends Component {
       <div className="categories">
         {
           categorias.map(({ id, name }) => (
-            <label
-              htmlFor={ name }
-              key={ id }
-              data-testid="category"
-            >
+            <div key={ id }>
               <input
                 type="radio"
                 id={ name }
                 value={ id }
                 name="category"
                 onClick={ handleCategory }
+                className="radio__input"
               />
-              { name }
-            </label>))
+              <label
+                htmlFor={ name }
+                data-testid="category"
+              >
+                { name }
+              </label>
+            </div>
+          ))
         }
       </div>
     );
