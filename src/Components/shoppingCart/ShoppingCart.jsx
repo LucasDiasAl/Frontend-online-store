@@ -78,7 +78,6 @@ export default class Cart extends Component {
     const qntAll = localStorage.getItem('qtdAll');
     const newQnt = Number(qntAll) - Number(individualQnt);
     localStorage.setItem('qtdAll', newQnt);
-    console.log(individualQnt);
     localStorage.removeItem(`qnt${value}`);
     localStorage.setItem('products', JSON.stringify(removedItemArray));
     this.setState({ cart: removedItem }, this.totalPrice);

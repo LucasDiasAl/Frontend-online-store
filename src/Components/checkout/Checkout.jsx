@@ -23,13 +23,12 @@ class Checkout extends React.Component {
 
   handleInput = ({ target }) => {
     const { name, value } = target;
-    console.log(target);
-    this.setState({ [name]: value }, () => console.log(this.state));
+    this.setState({ [name]: value });
   };
 
   handleRadio = ({ target }) => {
     const { value } = target;
-    this.setState({ payment: value }, () => console.log(this.state));
+    this.setState({ payment: value, verify: false });
   };
 
   getProducts() {
@@ -39,10 +38,9 @@ class Checkout extends React.Component {
   }
 
   validation = () => {
-    const { name, email, cpf, phone, cep, adress, payment } = this.state;
+    const { payment } = this.state;
     const { history } = this.props;
-    const all = [name, email, cpf, phone, cep, adress, payment];
-    if (all.some((e) => e === '')) {
+    if (payment === '') {
       this.setState({ verify: true });
     } else {
       this.setState({ verify: false });

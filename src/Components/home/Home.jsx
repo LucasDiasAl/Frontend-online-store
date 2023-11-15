@@ -29,7 +29,6 @@ export default class Home extends React.Component {
 
   handleSearch = async () => {
     const { search, selectedCategory } = this.state;
-    console.log(selectedCategory, 2, search);
     this.setState({ loading: true });
     const response = await getProductsFromCategoryAndQuery(selectedCategory, search);
     this.setState({
