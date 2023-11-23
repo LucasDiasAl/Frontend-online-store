@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import HoverCardTitle from '../displayItems/HoverCard';
 import CheckoutForm from './CheckoutForm';
 import './checkout.css';
 
@@ -58,7 +59,16 @@ class Checkout extends React.Component {
         </div>
         <div className="checkout__body">
           <div className="products">
-            { products.map((product) => <p key={ product.id }>{product.title}</p>)}
+            { products.map((product) => (
+              <div key={ product.id } className="list__products">
+                <img
+                  src={ product.thumbnail }
+                  alt={ product.title }
+                  className="product__img"
+                />
+                <HoverCardTitle title={ product.title } className="product__text" />
+              </div>
+            ))}
           </div>
           <CheckoutForm
             name={ name }

@@ -1,10 +1,22 @@
 /* eslint-disable max-len */
 import React from 'react';
+import './cartSVG.css';
 
 function CartSVG() {
   return (
     // <!-- License: MIT. Made by Lucide Contributors: https://lucide.dev/ -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 24 24" fill="none" stroke="#2b2b2b" strokeWidth="2.75" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-cart">
+    <svg
+      className="cart__SVG"
+      xmlns="http://www.w3.org/2000/svg"
+      width="33"
+      height="33"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#2b2b2b"
+      strokeWidth="2.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <circle cx="8" cy="21" r="1" />
       <circle cx="19" cy="21" r="1" />
       <path

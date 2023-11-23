@@ -1,31 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './form.css';
+
 class Form extends React.Component {
   state = {
     email: '',
     avaliation: '',
     message: '',
-    avaliaçoes: [],
     invalid: false,
-    check1: false,
-    check2: false,
-    check3: false,
-    check4: false,
-    check5: false,
-  };
-
-  componentDidUpdate(prevProps) {
-    const { prodId } = this.props;
-    if (prevProps.prodId !== prodId) {
-      this.getAvaliation();
-    }
-  }
-
-  getAvaliation = () => {
-    const { prodId } = this.props;
-    const id = JSON.parse(localStorage.getItem(prodId)) || [];
-    this.setState({ avaliaçoes: id });
   };
 
   // LOGICA DO REGEX RETIRADO DO POST NO SITE STACKOVERFLOW 'https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript'//
@@ -42,9 +25,9 @@ class Form extends React.Component {
     || (email === '') || (avaliation === ''));
   };
 
-  handleCheck = ({ target: { id, value, name } }) => {
+  handleCheck = ({ target: { value, name } }) => {
     this.setState({ invalid: false });
-    this.setState({ [name]: value, [id]: true });
+    this.setState({ [name]: value });
   };
 
   handleButton = ({ target: { value } }) => {
@@ -63,105 +46,98 @@ class Form extends React.Component {
       this.setState({ email: '',
         avaliation: '',
         message: '',
-        check1: false,
-        check2: false,
-        check3: false,
-        check4: false,
-        check5: false });
+      });
     }
-    const tmp = JSON.parse(localStorage.getItem(value)) || [];
-    this.setState({ avaliaçoes: tmp });
+    this.forceUpdate();
   };
 
   render() {
-    const { email, message, invalid, avaliaçoes, check1, check2,
-      check3, check4, check5 } = this.state;
+    const { email, message, invalid } = this.state;
     const { prodId } = this.props;
     return (
-      <div>
-        <form>
+      <div className="product__form">
+        { invalid && <p className="error__msg">Campos inválidos</p>}
+        <form className="form__body">
           <input
             type="email"
             name="email"
+            className="email__input"
             placeholder="Email"
             data-testid="product-detail-email"
             value={ email }
             onChange={ this.handleCheck }
             required
           />
-          <div>
-            <label htmlFor="avaliation">
+          <div className="product__score">
+            <label htmlFor="avaliation1">
               1
               <input
                 type="radio"
                 name="avaliation"
                 data-testid="1-rating"
-                id="check1"
+                id="avaliation1"
                 value={ 1 }
                 onChange={ this.handleCheck }
-                checked={ check1 }
               />
             </label>
-            <label htmlFor="avaliation">
+            <label htmlFor="avaliation2">
               2
               <input
                 type="radio"
                 name="avaliation"
                 data-testid="2-rating"
                 value={ 2 }
-                id="check2"
+                id="avaliation2"
                 onChange={ this.handleCheck }
-                checked={ check2 }
               />
             </label>
-            <label htmlFor="avaliation">
+            <label htmlFor="avaliation3">
               3
               <input
                 type="radio"
                 name="avaliation"
                 data-testid="3-rating"
                 value={ 3 }
-                id="check3"
+                id="avaliation3"
                 onChange={ this.handleCheck }
-                checked={ check3 }
               />
             </label>
-            <label htmlFor="avaliation">
+            <label htmlFor="avaliation4">
               4
               <input
                 type="radio"
                 name="avaliation"
                 data-testid="4-rating"
                 value={ 4 }
-                id="check4"
+                id="avaliation4"
                 onChange={ this.handleCheck }
-                checked={ check4 }
               />
             </label>
-            <label htmlFor="avaliation">
+            <label htmlFor="avaliation5">
               5
               <input
                 type="radio"
                 name="avaliation"
                 data-testid="5-rating"
                 value={ 5 }
-                id="check5"
+                id="avaliation5"
                 onChange={ this.handleCheck }
-                checked={ check5 }
               />
             </label>
           </div>
           <textarea
+            className="product__coment"
             name="message"
             cols="30"
             rows="10"
             data-testid="product-detail-evaluation"
-            placeholder="Mensagem"
+            placeholder="Comentário"
             value={ message }
             onChange={ this.handleInput }
           />
           <button
             type="button"
+            className="btn__review"
             data-testid="submit-review-btn"
             value={ prodId }
             onClick={ this.handleButton }
@@ -169,27 +145,6 @@ class Form extends React.Component {
             Avaliar
           </button>
         </form>
-        <div>
-          { invalid && <p data-testid="error-msg">Campos inválidos</p>}
-        </div>
-        <div>
-          <ul>
-            {
-              avaliaçoes.map(({ email: userEmail, text, rating }, index) => (
-                <li key={ index }>
-                  <h3 data-testid="review-card-email">
-                    {userEmail}
-                  </h3>
-                  <p data-testid="review-card-rating">
-                    {rating}
-                  </p>
-                  <p data-testid="review-card-evaluation">
-                    {text}
-                  </p>
-                </li>))
-            }
-          </ul>
-        </div>
       </div>
     );
   }

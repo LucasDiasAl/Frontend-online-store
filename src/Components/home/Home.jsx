@@ -2,7 +2,7 @@ import React from 'react';
 import qtdAll from '../../services/qtdPlus';
 import { getProductsFromCategoryAndQuery, getCategories } from '../../services/api';
 import Category from '../category/Category';
-import CartSVG from '../../SVG/cartSVG';
+import CartSVG from '../../SVG/cartSVG/cartSVG';
 import LoadingSVG from '../../SVG/loading/loadingSVG';
 import DisplayItems from '../displayItems/DisplayItems';
 

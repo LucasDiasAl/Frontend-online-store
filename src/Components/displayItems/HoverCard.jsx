@@ -4,13 +4,11 @@ import * as HoverCard from '@radix-ui/react-hover-card';
 
 export default class HoverCardTitle extends React.Component {
   render() {
-    const { title } = this.props;
+    const { title, className } = this.props;
     return (
-      <div
-        className="title__div"
-      >
+      <div className="hover__card">
         <HoverCard.Root openDelay={ 0 } closeDelay={ 0 }>
-          <HoverCard.Trigger className="product__title" asChild>
+          <HoverCard.Trigger className={ className } asChild>
             <h1>
               {title}
             </h1>
@@ -30,4 +28,5 @@ export default class HoverCardTitle extends React.Component {
 
 HoverCardTitle.propTypes = {
   title: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
 };

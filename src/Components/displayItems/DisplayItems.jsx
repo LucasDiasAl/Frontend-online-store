@@ -18,7 +18,7 @@ export default class DisplayItems extends React.Component {
                 src={ product.thumbnail }
                 alt={ product.title }
               />
-              <HoverCardTitle title={ product.title } />
+              <HoverCardTitle title={ product.title } className="product__title" />
               <h1 className="product__price">{product.price}</h1>
             </a>
             {product.shipping.free_shipping === true && (
