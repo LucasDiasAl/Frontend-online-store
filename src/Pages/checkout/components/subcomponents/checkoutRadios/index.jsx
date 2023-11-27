@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
+import './checkoutRadios.css';
+
 export default class CheckoutRadio extends React.Component {
   render() {
     const { handleRadio, verify } = this.props;
@@ -29,7 +31,7 @@ export default class CheckoutRadio extends React.Component {
               onClick={ handleRadio }
               id="Boleto"
             >
-              <RadioGroup.Indicator className="RadioGroupIndicator" />
+              <RadioGroup.Indicator className="radio__group__indicator" />
             </RadioGroup.Item>
             <label className="Label" htmlFor="Boleto">
               Boleto
@@ -42,7 +44,7 @@ export default class CheckoutRadio extends React.Component {
               onClick={ handleRadio }
               id="Visa"
             >
-              <RadioGroup.Indicator className="RadioGroupIndicator" />
+              <RadioGroup.Indicator className="radio__group__indicator" />
             </RadioGroup.Item>
             <label className="Label" htmlFor="Visa">
               Visa
@@ -55,7 +57,7 @@ export default class CheckoutRadio extends React.Component {
               onClick={ handleRadio }
               id="MasterCard"
             >
-              <RadioGroup.Indicator className="RadioGroupIndicator" />
+              <RadioGroup.Indicator className="radio__group__indicator" />
             </RadioGroup.Item>
             <label className="Label" htmlFor="MasterCard">
               MasterCard
@@ -68,7 +70,7 @@ export default class CheckoutRadio extends React.Component {
               onClick={ handleRadio }
               id="Elo"
             >
-              <RadioGroup.Indicator className="RadioGroupIndicator" />
+              <RadioGroup.Indicator className="radio__group__indicator" />
             </RadioGroup.Item>
             <label className="Label" htmlFor="Elo">
               Elo

@@ -1,10 +1,10 @@
 import React from 'react';
 import qtdAll from '../../services/qtdPlus';
 import { getProductsFromCategoryAndQuery, getCategories } from '../../services/api';
-import Category from '../category/Category';
+import Category from './components/category';
 import CartSVG from '../../SVG/cartSVG/cartSVG';
 import LoadingSVG from '../../SVG/loading/loadingSVG';
-import DisplayItems from '../displayItems/DisplayItems';
+import DisplayItems from './components/displayItems';
 
 import './home.css';
 
@@ -48,6 +48,7 @@ export default class Home extends React.Component {
     const localProds = JSON.parse(localStorage.getItem('products')) || [];
     const prodsNew = [...localProds, produToAdd];
     localStorage.setItem('products', JSON.stringify(prodsNew));
+    localStorage.setItem(`qnt${produToAdd[0][1]}`, '1');
     qtdAll();
     this.forceUpdate();
   };

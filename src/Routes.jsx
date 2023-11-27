@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Home from './Components/home/Home';
-import ShoppingCart from './Components/shoppingCart/ShoppingCart';
-import Products from './Components/product/Products';
-import Checkout from './Components/checkout/Checkout';
+import Home from './Pages/home';
+import ShoppingCart from './Pages/shoppingCart';
+import Products from './Pages/productView';
+import Checkout from './Pages/checkout';
 
 class Routes extends Component {
   render() {

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import HoverCardTitle from '../displayItems/HoverCard';
-import CheckoutForm from './CheckoutForm';
+import HoverCardTitle from '../GlobalComponents/hoverCard';
+import CheckoutForm from './components/checkoutForm';
 import './checkout.css';
 
 class Checkout extends React.Component {
@@ -16,10 +16,12 @@ class Checkout extends React.Component {
     adress: '',
     payment: '',
     verify: false,
+    totalPrice: 0,
   };
 
   componentDidMount() {
     this.getProducts();
+    this.getTotalPrice();
   }
 
   handleInput = ({ target }) => {
@@ -38,6 +40,12 @@ class Checkout extends React.Component {
     this.setState({ products });
   }
 
+  getTotalPrice = () => {
+    const totalPrice = localStorage.getItem('totalPrice');
+    console.log(totalPrice);
+    this.setState({ totalPrice });
+  };
+
   validation = () => {
     const { payment } = this.state;
     const { history } = this.props;
@@ -51,11 +59,15 @@ class Checkout extends React.Component {
   };
 
   render() {
-    const { products, name, email, cpf, phone, cep, adress, verify } = this.state;
+    const { products, name, email, cpf, phone,
+      cep, adress, verify, totalPrice } = this.state;
     return (
       <div className="checkout__main">
         <div className="checkout__header">
-          <h1> Pagamento </h1>
+          <h1 className="checkout__title"> Pagamento </h1>
+          <h1 className="total__price__checkout">
+            {`Preço total: R$${totalPrice}`}
+          </h1>
         </div>
         <div className="checkout__body">
           <div className="products">
@@ -95,3 +107,4 @@ Checkout.propTypes = {
 };
 
 export default Checkout;
+// corrijir erro na contagem de produtos do carrinho

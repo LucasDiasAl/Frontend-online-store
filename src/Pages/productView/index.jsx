@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 
 import qtdAll from '../../services/qtdPlus';
 import { getProductsFromId } from '../../services/api';
-import Form from '../productForm/Form';
-import HoverCardTitle from '../displayItems/HoverCard';
+import Form from './components/productForm';
+import HoverCardTitle from '../GlobalComponents/hoverCard';
 import CartSVG from '../../SVG/cartSVG/cartSVG';
-import ReviewTable from '../reviewTable/ReviewTable';
+import ReviewTable from './components/reviewTable';
 
 import './products.css';
 
@@ -43,6 +43,8 @@ class Products extends React.Component {
     const produToAdd = Object.entries(product);
     const prodsNew = [...localProds, produToAdd];
     localStorage.setItem('products', JSON.stringify(prodsNew));
+    console.log(product.id);
+    localStorage.setItem(`qnt${product.id}`, '1');
     qtdAll();
     this.forceUpdate();
   };
@@ -94,9 +96,15 @@ class Products extends React.Component {
           <Form
             prodId={ product.id }
           />
-          <ReviewTable
-            avaliaçoes={ avaliaçoes }
-          />
+
+          {avaliaçoes.length !== 0
+          && (
+            <>
+              <h1 className="coment__tag">Comentários</h1>
+              <ReviewTable
+                avaliaçoes={ avaliaçoes }
+              />
+            </>)}
         </div>
       </div>
     );

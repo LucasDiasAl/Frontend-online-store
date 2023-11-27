@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import * as Form from '@radix-ui/react-form';
-import CheckoutRadio from './CheckoutRadios';
-import CheckoutInputs from './CheckoutInputs';
+
+import CheckoutRadio from '../subcomponents/checkoutRadios';
+import CheckoutInputs from '../subcomponents/checkoutInputs';
+
+import './checkoutForm.css';
 
 export default class CheckoutForm extends React.Component {
   render() {

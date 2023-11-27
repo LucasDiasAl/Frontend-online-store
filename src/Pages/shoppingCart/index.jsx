@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import qtdAll from '../../services/qtdPlus';
-import MinusSVG from '../../SVG/plusMinusSVG/MinusSVG';
-import PlusSVG from '../../SVG/plusMinusSVG/PlusSVG';
+import CartProducts from './components/CartProducts';
 
 import './shoppingCart.css';
 
@@ -18,9 +17,6 @@ export default class Cart extends Component {
   async getProducts() {
     const localProds = JSON.parse(localStorage.getItem('products')) || [];
     const prodsObj = localProds.map((curr) => Object.fromEntries(curr));
-    prodsObj.forEach(({ id }) => {
-      localStorage.setItem(`qnt${id}`, '1');
-    });
     this.setState({ cart: prodsObj }, this.totalPrice);
   }
 
@@ -33,6 +29,7 @@ export default class Cart extends Component {
       return Math.round(acc * 100) / 100;
     }, 0);
     this.setState({ totalPrice });
+    localStorage.setItem('totalPrice', totalPrice);
   };
 
   handleQntMinus = () => {
@@ -121,61 +118,11 @@ export default class Cart extends Component {
           </div>
         )
           : (
-            <ul className="cart__list">
-              { cart.map((prod) => (
-                <li key={ prod.id } className="individual__product">
-                  <img
-                    src={ prod.thumbnail }
-                    alt={ prod.title }
-                    className="img__product"
-                  />
-                  <h1
-                    data-testid="shopping-cart-product-name"
-                    className="title__product"
-                  >
-                    { prod.title }
-
-                  </h1>
-                  <div className="quantity__div">
-                    <div className="quantity__buttons">
-                      <button
-                        type="button"
-                        name={ `mais-${prod.id}` }
-                        data-testid="product-increase-quantity"
-                        onClick={ () => this
-                          .handleQnt(`mais-${prod.id}`) }
-                      >
-                        <PlusSVG />
-                      </button>
-                      <button
-                        type="button"
-                        name={ `menos-${prod.id}` }
-                        data-testid="product-decrease-quantity"
-                        onClick={ () => this
-                          .handleQnt(`menos-${prod.id}`) }
-                      >
-                        <MinusSVG />
-                      </button>
-                    </div>
-                    <h1 data-testid="shopping-cart-product-quantity">
-                      { localStorage.getItem(`qnt${prod.id}`) }
-                    </h1>
-                  </div>
-                  <h1 className="individual__price">
-                    { prod.price }
-                  </h1>
-                  <button
-                    type="button"
-                    data-testid="remove-product"
-                    value={ prod.id }
-                    onClick={ this.handleRemove }
-                    className="remove__button"
-                  >
-                    Remover
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <CartProducts
+              cart={ cart }
+              handleRemove={ this.handleRemove }
+              handleQnt={ this.handleQnt }
+            />
           )}
       </div>
     );

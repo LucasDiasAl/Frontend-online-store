@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Form from '@radix-ui/react-form';
 
-import InputValidation from '../../helpers/InputValidation';
+import InputValidation from '../../../../../helpers/InputValidation';
+
+import './checkoutInputs.css';
 
 export default class CheckoutInputs extends React.Component {
   render() {
@@ -21,16 +23,16 @@ export default class CheckoutInputs extends React.Component {
     } = this.props;
     return (
       <div className="form__inputs">
-        <Form.Field className="FormField" name="name">
+        <Form.Field className="form__field" name="name">
           <div
             style={ labelDivStyle }
           >
-            <Form.Label className="FormLabel">Nome</Form.Label>
-            <Form.Message className="FormMessage" match="valueMissing">
+            <Form.Label className="form__label">Nome</Form.Label>
+            <Form.Message className="form__message" match="valueMissing">
               Insira seu nome
             </Form.Message>
             <Form.Message
-              className="FormMessage"
+              className="form__message"
               match={ (value) => inputValidation.validateString(value, 'name') }
             >
               nome inválido
@@ -49,16 +51,16 @@ export default class CheckoutInputs extends React.Component {
             />
           </Form.Control>
         </Form.Field>
-        <Form.Field className="FormField" name="email">
+        <Form.Field className="form__field" name="email">
           <div
             style={ labelDivStyle }
           >
-            <Form.Label className="FormLabel">Email</Form.Label>
-            <Form.Message className="FormMessage" match="valueMissing">
+            <Form.Label className="form__label">Email</Form.Label>
+            <Form.Message className="form__message" match="valueMissing">
               Insira seu email
             </Form.Message>
             <Form.Message
-              className="FormMessage"
+              className="form__message"
               match="typeMismatch"
             >
               email inválido
@@ -77,16 +79,16 @@ export default class CheckoutInputs extends React.Component {
             />
           </Form.Control>
         </Form.Field>
-        <Form.Field className="FormField" name="cpf">
+        <Form.Field className="form__field" name="cpf">
           <div
             style={ labelDivStyle }
           >
-            <Form.Label className="FormLabel">CPF</Form.Label>
-            <Form.Message className="FormMessage" match="valueMissing">
+            <Form.Label className="form__label">CPF</Form.Label>
+            <Form.Message className="form__message" match="valueMissing">
               Insira seu CPF
             </Form.Message>
             <Form.Message
-              className="FormMessage"
+              className="form__message"
               match={ (value) => inputValidation.validateString(value, 'cpf') }
             >
               CPF inválido
@@ -105,16 +107,16 @@ export default class CheckoutInputs extends React.Component {
             />
           </Form.Control>
         </Form.Field>
-        <Form.Field className="FormField" name="phone">
+        <Form.Field className="form__field" name="phone">
           <div
             style={ labelDivStyle }
           >
-            <Form.Label className="FormLabel">Telefone</Form.Label>
-            <Form.Message className="FormMessage" match="valueMissing">
+            <Form.Label className="form__label">Telefone</Form.Label>
+            <Form.Message className="form__message" match="valueMissing">
               Insira seu telefone
             </Form.Message>
             <Form.Message
-              className="FormMessage"
+              className="form__message"
               match={ (value) => inputValidation.validateString(value, 'phone') }
             >
               telefone inválido
@@ -133,16 +135,16 @@ export default class CheckoutInputs extends React.Component {
             />
           </Form.Control>
         </Form.Field>
-        <Form.Field className="FormField" name="cep">
+        <Form.Field className="form__field" name="cep">
           <div
             style={ labelDivStyle }
           >
-            <Form.Label className="FormLabel">CEP</Form.Label>
-            <Form.Message className="FormMessage" match="valueMissing">
+            <Form.Label className="form__label">CEP</Form.Label>
+            <Form.Message className="form__message" match="valueMissing">
               Insira seu CEP
             </Form.Message>
             <Form.Message
-              className="FormMessage"
+              className="form__message"
               match={ (value) => inputValidation.validateString(value, 'cep') }
             >
               CEP inválido
@@ -161,12 +163,12 @@ export default class CheckoutInputs extends React.Component {
             />
           </Form.Control>
         </Form.Field>
-        <Form.Field className="FormField" name="adress">
+        <Form.Field className="form__field" name="adress">
           <div
             style={ labelDivStyle }
           >
-            <Form.Label className="FormLabel">Endereço</Form.Label>
-            <Form.Message className="FormMessage" match="valueMissing">
+            <Form.Label className="form__label">Endereço</Form.Label>
+            <Form.Message className="form__message" match="valueMissing">
               Insira seu endereço
             </Form.Message>
           </div>

@@ -2,4 +2,5 @@
 .plus__svg {
   stroke: var(--amarelo-midia);
   stroke-width: 1.2px;
+  cursor: pointer;
 }
