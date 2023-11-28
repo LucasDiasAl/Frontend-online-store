@@ -46,24 +46,6 @@
   word-break: break-word;
 }
 
-.HoverCardContent {
-  border-radius: 6px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  padding: 2px;
-  z-index: 1;
-  width: 30vw;
-  height: auto;
-  white-space: wrap;
-  line-break: anywhere;
-  background-color: var(--amarelo-midia);
-  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
-    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
-}
-
-.HoverCardArrow {
-  fill: var(--amarelo-midia);
-}
-
 .product__title:hover {
   color: rgb(179, 179, 1);
 }
@@ -93,9 +75,4 @@
 
 .add__to__cart__button:hover {
   background-color: #1976d2;
-}
-
-.hover__card {
-  display: flex;
-  justify-content: center;
 }

@@ -1,8 +1,7 @@
-/* eslint-disable react/jsx-max-depth */
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import HoverCardTitle from './HoverCard';
+import HoverCardTitle from '../../../GlobalComponents/hoverCard';
 import './displayItems.css';
 
 export default class DisplayItems extends React.Component {

@@ -2,6 +2,8 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import * as HoverCard from '@radix-ui/react-hover-card';
 
+import './hoverCard.css';
+
 export default class HoverCardTitle extends React.Component {
   render() {
     const { title, className } = this.props;
@@ -15,9 +17,9 @@ export default class HoverCardTitle extends React.Component {
           </HoverCard.Trigger>
           <HoverCard.Content
             side="right"
-            className="HoverCardContent"
+            className="hover__card__content"
           >
-            <HoverCard.Arrow className="HoverCardArrow" />
+            <HoverCard.Arrow className="hover__card__arrow" />
             {title}
           </HoverCard.Content>
         </HoverCard.Root>
