@@ -1,0 +1,89 @@
+.product__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30vw;
+}
+
+.form__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 80%;
+}
+
+.email__input {
+  all: unset;
+  background-color: var(--base-branco);
+  text-align: start;
+  width: 80%;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+  font-size: 12pt;
+}
+
+.email__input:hover {
+  box-shadow: 0 0 0 2px black;
+}
+
+.email__input:focus {
+  box-shadow: 0 0 0 2px rgb(0, 0, 0, 0.7);
+}
+
+.product__score {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  font-weight: 600;
+}
+
+.product__score::before {
+  content: 'Nota: ';
+  font-size: 14pt;
+  font-weight: 600;
+}
+
+.product__score input {
+  cursor: pointer;
+}
+
+.product__coment {
+  all: unset;
+  text-align: start;
+  padding: 1px 5px;
+  word-break: break-word;
+  font-size: 12pt;
+  background-color: var(--base-branco);
+  height: 50%;
+  width: 80%;
+  border-radius: 6px;
+}
+
+.btn__review {
+  all: unset;
+  background-color: var(--base-cinza);
+  color: var(--base-branco);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 14pt;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn__review:hover {
+  background-color: #1976d2;
+}
+
+.error__msg {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: red;
+  letter-spacing: 1px;
+}
