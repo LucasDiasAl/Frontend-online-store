@@ -11,9 +11,8 @@ describe(`4 - Liste as categorias de produtos disponíveis via API na página pr
     render(<App />);
     await waitFor(() => expect(global.fetch).toHaveBeenCalled());
 
-    const categoriesElements = await screen.findAllByTestId('category')
-
-    expect(categoriesElements.length).toEqual(
+    const categoriesElements = (await screen.findByText(/Acessórios para Veículos/)).parentNode.parentNode
+    expect(categoriesElements.children.length).toEqual(
       mockedCategoriesResult.length
     );
   });

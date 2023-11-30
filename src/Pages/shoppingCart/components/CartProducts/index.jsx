@@ -19,7 +19,6 @@ export default class CartProducts extends React.Component {
               className="img__product"
             />
             <h1
-              data-testid="shopping-cart-product-name"
               className="title__product"
             >
               { prod.title }
@@ -30,7 +29,6 @@ export default class CartProducts extends React.Component {
                 <button
                   type="button"
                   name={ `mais-${prod.id}` }
-                  data-testid="product-increase-quantity"
                   onClick={ () => handleQnt(`mais-${prod.id}`) }
                 >
                   <PlusSVG />
@@ -38,13 +36,12 @@ export default class CartProducts extends React.Component {
                 <button
                   type="button"
                   name={ `menos-${prod.id}` }
-                  data-testid="product-decrease-quantity"
                   onClick={ () => handleQnt(`menos-${prod.id}`) }
                 >
                   <MinusSVG />
                 </button>
               </div>
-              <h1 data-testid="shopping-cart-product-quantity">
+              <h1>
                 { localStorage.getItem(`qnt${prod.id}`) }
               </h1>
             </div>
@@ -53,7 +50,6 @@ export default class CartProducts extends React.Component {
             </h1>
             <button
               type="button"
-              data-testid="remove-product"
               value={ prod.id }
               onClick={ handleRemove }
               className="remove__button"

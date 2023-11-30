@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import qtdAll from '../../services/qtdPlus';
 import { getProductsFromCategoryAndQuery, getCategories } from '../../services/api';
 import Category from './components/category';
@@ -70,23 +72,21 @@ export default class Home extends React.Component {
               type="text"
               name="search"
               placeholder="Search"
-              data-testid="query-input"
               search={ search }
               onChange={ this.handleSearchInput }
             />
             <button
               type="submit"
-              data-testid="query-button"
               onClick={ this.handleSearch }
             >
               Pesquisar
             </button>
           </div>
           <div className="cart__div">
-            <p data-testid="shopping-cart-size">{localStorage.getItem('qtdAll')}</p>
-            <a data-testid="shopping-cart-button" href="/ShoppingCart">
+            <p>{localStorage.getItem('qtdAll')}</p>
+            <Link to="/ShoppingCart">
               <CartSVG />
-            </a>
+            </Link>
           </div>
         </div>
         <div className="home__main">

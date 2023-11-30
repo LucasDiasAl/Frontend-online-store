@@ -46,7 +46,6 @@ export default class CheckoutInputs extends React.Component {
               value={ name }
               onChange={ handleInput }
               placeholder="Name"
-              data-testid="checkout-fullname"
               required
             />
           </Form.Control>
@@ -73,7 +72,6 @@ export default class CheckoutInputs extends React.Component {
               className="input"
               value={ email }
               onChange={ handleInput }
-              data-testid="checkout-email"
               placeholder="Email"
               required
             />
@@ -102,7 +100,6 @@ export default class CheckoutInputs extends React.Component {
               value={ cpf }
               onChange={ handleInput }
               placeholder="CPF"
-              data-testid="checkout-cpf"
               required
             />
           </Form.Control>
@@ -130,7 +127,6 @@ export default class CheckoutInputs extends React.Component {
               value={ phone }
               onChange={ handleInput }
               placeholder="Telefone"
-              data-testid="checkout-phone"
               required
             />
           </Form.Control>
@@ -158,7 +154,6 @@ export default class CheckoutInputs extends React.Component {
               value={ cep }
               onChange={ handleInput }
               placeholder="CEP"
-              data-testid="checkout-cep"
               required
             />
           </Form.Control>
@@ -180,7 +175,6 @@ export default class CheckoutInputs extends React.Component {
               value={ adress }
               onChange={ handleInput }
               placeholder="Endereço"
-              data-testid="checkout-address"
               required
             />
           </Form.Control>

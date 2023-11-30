@@ -1,5 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import HoverCardTitle from '../../../GlobalComponents/hoverCard';
 import './displayItems.css';
@@ -11,7 +12,7 @@ export default class DisplayItems extends React.Component {
       <ul className="list__items">
         {productsApi.map((product) => (
           <li key={ product.id } className="product__item">
-            <a href={ `/Products/${product.id}` } className="product__link">
+            <Link to={ `/Products/${product.id}` } className="product__link">
               <img
                 className="product__image"
                 src={ product.thumbnail }
@@ -19,14 +20,13 @@ export default class DisplayItems extends React.Component {
               />
               <HoverCardTitle title={ product.title } className="product__title" />
               <h1 className="product__price">{product.price}</h1>
-            </a>
+            </Link>
             {product.shipping.free_shipping === true && (
               <h1 className="free__shipping__badge">Frete grátis</h1>
             )}
             <button
               type="button"
               className="add__to__cart__button"
-              data-testid="product__add__to__cart"
               value={ product.id }
               onClick={ addToCart }
             >

@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-max-depth */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import qtdAll from '../../services/qtdPlus';
 import { getProductsFromId } from '../../services/api';
@@ -58,21 +59,18 @@ class Products extends React.Component {
             {shipping && (
               <p
                 className="free__shipping__details"
-                data-testid="free-shipping"
               >
                 Frete grátis
               </p>)}
           </div>
           <img
             className="product___img__detail"
-            data-testid="product-detail-image"
             src={ product.thumbnail }
             alt={ product.title }
           />
           <HoverCardTitle title={ product.title } className="product__title__detail" />
           <p
             className="price__detail"
-            data-testid="product-detail-price"
           >
             {product.price}
 
@@ -82,16 +80,15 @@ class Products extends React.Component {
               className="add__cart__btn"
               type="submit"
               onClick={ this.handleClickButton }
-              data-testid="product-detail-add-to-cart"
             >
               Adicionar Carrinho
             </button>
           </div>
           <div className="cart">
-            <p data-testid="shopping-cart-size">{localStorage.getItem('qtdAll')}</p>
-            <a data-testid="shopping-cart-button" href="/ShoppingCart">
+            <p>{localStorage.getItem('qtdAll')}</p>
+            <Link to="/ShoppingCart">
               <CartSVG />
-            </a>
+            </Link>
           </div>
           <Form
             prodId={ product.id }

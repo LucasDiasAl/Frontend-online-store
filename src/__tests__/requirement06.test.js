@@ -13,13 +13,13 @@ describe('6 - Selecione uma categoria e mostre somente os produtos daquela categ
     render(<App />);
     expect(global.fetch).toHaveBeenCalled();
 
-    const categoriesEl = await screen.findAllByTestId('category');
-    userEvent.click(categoriesEl[0]);
+    const category = (await screen.findByText(/Acessórios para Veículos/))
+    userEvent.click(category);
 
     expect(global.fetch).toHaveBeenCalledTimes(2);
 
-    const productsEl = await screen.findAllByTestId('product');
-    expect(productsEl.length).toEqual(
+    const products = await screen.findAllByRole('listitem');
+    expect(products.length).toEqual(
       mockedQueryResult.results.length,
     );
   });

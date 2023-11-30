@@ -1,21 +1,17 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 
-describe('3 - Crie a página do carrinho de compras', () => {
-  it('A home deve ter o botão do carrinho de compras', () => {
+describe.only('3 - Crie a página do carrinho de compras', () => {
+  it('A home deve ter o botão do carrinho de compras', async () => {
     render(<App />);
-    expect(screen.getByTestId('shopping-cart-button')).toBeDefined();
-  });
+    const cartSVG = screen.getByRole('link');
+    expect(cartSVG).toBeInTheDocument();
+    userEvent.click(cartSVG)
 
-  it(`Clicar no botão deve levar à página do carrinho vazio, com a mensagem
-      'Seu carrinho está vazio' nela`, async () => {
-    render(<App />);
-    userEvent.click(screen.getByTestId('shopping-cart-button'));
-    await waitFor(() => screen.getByTestId('shopping-cart-empty-message'));
-    expect(screen.getByTestId('shopping-cart-empty-message')).toHaveTextContent(
-      'Seu carrinho está vazio',
-    );
+    const emptyText = screen.getByText(/Seu carrinho está vazio/);
+
+    expect(emptyText).toBeInTheDocument();
   });
 });

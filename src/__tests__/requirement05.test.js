@@ -13,29 +13,29 @@ describe(`5 - Liste os produtos buscados por termos, com os dados resumidos, ass
   it('Exibe a mensagem "Nenhum produto foi encontrado" caso a busca não retorne produtos', async () => {
     render(<App />);
 
-    userEvent.clear(screen.getByTestId('query-input'));
-
-    userEvent.click(screen.getByTestId('query-button'));
+    userEvent.clear(screen.getByPlaceholderText('Search'));
+    await waitFor(() => expect(screen.getByText('Digite algum termo de pesquisa ou escolha uma categoria.')).toBeInTheDocument());
+    userEvent.click(screen.getByRole('button',  {value: {text: 'PESQUISAR' }}));
     await waitFor(() => expect(screen.getByText('Nenhum produto foi encontrado')).toBeInTheDocument());
   })
   
   it(`Exibe todos os produtos retornados pela API, dado um determinado filtro`, async () => {
     jest.spyOn(global, 'fetch').mockImplementation(mockFetch);
     render(<App />);
- 
+   
     userEvent.type(
-      screen.getByTestId('query-input'),
+      screen.getByPlaceholderText('Search'),
       'carro'
     );
-
-    const buttonEl = await screen.findByTestId('query-button')
-    userEvent.click(buttonEl);
-
+  
+    const buttonSearch = screen.getByRole('button', { value: { text: 'PESQUISAR' } });
+    userEvent.click(buttonSearch);
+  
     expect(global.fetch).toHaveBeenCalled();
-
-    const productsElements = await screen.findAllByTestId('product');
-    expect(productsElements.length).toEqual(
-      searchedQuery.results.length,
-    );
+  
+    await screen.findByRole('list');
+  
+    const productsElements = screen.getAllByRole('listitem');
+    expect(productsElements.length).toEqual(searchedQuery.results.length);
   });
 });

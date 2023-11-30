@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import qtdAll from '../../services/qtdPlus';
 import CartProducts from './components/CartProducts';
 
@@ -87,21 +89,19 @@ export default class Cart extends Component {
         <div className="cart__header">
           <div className="header__links">
             {cart.length !== 0 && (
-              <a
-                data-testid="checkout-products"
-                href="/Checkout"
+              <Link
+                to="/Checkout"
                 className="checkout__link"
               >
                 Finalizar compras
-              </a>
+              </Link>
             )}
-            <a
-              data-testid="checkout-products"
-              href="/"
+            <Link
+              to="/"
               className="checkout__link"
             >
               Continuar comprando
-            </a>
+            </Link>
           </div>
           <div className="total__price">
             <h1>
@@ -112,7 +112,7 @@ export default class Cart extends Component {
 
         {cart.length === 0 ? (
           <div className="empty__message">
-            <h1 data-testid="shopping-cart-empty-message">
+            <h1>
               Seu carrinho está vazio
             </h1>
           </div>
