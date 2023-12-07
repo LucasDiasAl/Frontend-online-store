@@ -42,7 +42,6 @@ class Checkout extends React.Component {
 
   getTotalPrice = () => {
     const totalPrice = localStorage.getItem('totalPrice');
-    console.log(totalPrice);
     this.setState({ totalPrice });
   };
 

@@ -44,7 +44,6 @@ class Products extends React.Component {
     const produToAdd = Object.entries(product);
     const prodsNew = [...localProds, produToAdd];
     localStorage.setItem('products', JSON.stringify(prodsNew));
-    console.log(product.id);
     localStorage.setItem(`qnt${product.id}`, '1');
     qtdAll();
     this.forceUpdate();
