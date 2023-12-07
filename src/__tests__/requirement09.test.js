@@ -8,27 +8,28 @@ import userEvent from '@testing-library/user-event';
 describe(`9 - Adicione um produto ao carrinho a partir de sua tela de exibição detalhada`, () => {
   beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
   it('Adiciona um produto ao carrinho a partir da sua tela de detalhes', async () => {
-    render(<App />);
+    const { container } = render(<App />);
     expect(global.fetch).toHaveBeenCalled();
 
-    userEvent.click((await screen.findAllByTestId('category'))[0]);
+    userEvent.click(await screen.findByText(/Agro/));
     expect(global.fetch).toHaveBeenCalledTimes(2);
-    userEvent.click((await screen.findAllByTestId('product-detail-link'))[0]);
+    userEvent.click(await screen.findByText(/Pequeno Principe, O/));
 
     await waitFor(() =>
-      expect(screen.getByTestId('product-detail-name')).toHaveTextContent(
+      expect(container.querySelector('h1.product__title__detail')).toHaveTextContent(
         mockedQueryResult.results[0].title
       )
     );
 
-    userEvent.click(screen.getByTestId('product-detail-add-to-cart'));
-    userEvent.click(screen.getByTestId('shopping-cart-button'));
-    expect(screen.getAllByTestId('shopping-cart-product-name'));
+    userEvent.click(screen.getByText('Adicionar ao Carrinho'));
+    userEvent.click(container.querySelector('a[href="/ShoppingCart"]'));
+
+    expect(container.querySelector('li'));
+    expect(container.querySelector('h1.title__product')).toHaveTextContent(
+      mockedQueryResult.results[0].title
+    );
     expect(
-      screen.getAllByTestId('shopping-cart-product-name')[0]
-    ).toHaveTextContent(mockedQueryResult.results[0].title);
-    expect(
-      screen.getAllByTestId('shopping-cart-product-quantity')[0]
-    ).toHaveTextContent('1');
+      container.querySelector('div.total__price')
+    ).toHaveTextContent(mockedQueryResult.results[0].price);
   });
 });

@@ -81,7 +81,7 @@ class Products extends React.Component {
               type="submit"
               onClick={ this.handleClickButton }
             >
-              Adicionar Carrinho
+              Adicionar ao Carrinho
             </button>
           </div>
           <div className="cart">

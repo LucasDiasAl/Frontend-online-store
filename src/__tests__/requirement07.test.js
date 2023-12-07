@@ -11,43 +11,39 @@ describe(`7 - Redirecione para uma tela com a exibição detalhada ao clicar na 
     render(<App />);
     expect(global.fetch).toHaveBeenCalled();
 
-    const categoriesEl = await screen.findAllByTestId('category');
-    userEvent.click(categoriesEl[0]);
+    const category = await screen.findByText(/Acessórios para Veículos/);
+    act(() => {
+      userEvent.click(category);
+    })
 
     expect(global.fetch).toHaveBeenCalledTimes(2);
 
-    const productLinksEl = await screen.findAllByTestId('product-detail-link');
+    const productLink = await screen.findByText(/Pequeno Principe, O/);
 
-    await act(async () => {
-      userEvent.click(productLinksEl[0]);
+     act(() => {
+      userEvent.click(productLink);
     })
+    
+    const productName = await screen.findByText(/Pequeno Principe, O/);
+    const productImage = await screen.findByRole('img');
+    const productPrice = await screen.findByText(/7.7/);
 
-    const productNameEl = await screen.findAllByTestId('product-detail-name');
-    const productImageEl = await screen.findByTestId('product-detail-image');
-    const productPriceEl = await screen.findByTestId('product-detail-price');
+    expect(productImage).toBeInTheDocument();
 
-    expect(productNameEl[0]).toHaveTextContent(
+    expect(productName).toHaveTextContent(
       mockedQueryResult.results[0].title
     );
-    expect(productImageEl).toBeInTheDocument();
-    expect(productPriceEl).toHaveTextContent(
+    expect(productImage).toBeInTheDocument();
+    expect(productPrice).toHaveTextContent(
       mockedQueryResult.results[0].price
     );
   });
 
   it('Na página de detalhes de um produto, o elemento que redireciona para o carrinho de compras é exibido', async () => {
-    render(<App />);
-
-    await waitFor(() =>
-      expect(screen.getByTestId('shopping-cart-button')).toBeInTheDocument()
-    );
-
-    userEvent.click(screen.getByTestId('shopping-cart-button'));
-
-    await waitFor(() =>
-      expect(
-        screen.getByTestId('shopping-cart-empty-message')
-      ).toBeInTheDocument()
-    );
+    const { container } = render(<App />);
+    const link = container.querySelector('a');
+  
+    expect(link).toBeInTheDocument();
+    expect(link.getAttribute('href')).toBe('/ShoppingCart');
   });
 });

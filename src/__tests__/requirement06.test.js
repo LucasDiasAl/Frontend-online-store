@@ -13,7 +13,7 @@ describe('6 - Selecione uma categoria e mostre somente os produtos daquela categ
     render(<App />);
     expect(global.fetch).toHaveBeenCalled();
 
-    const category = (await screen.findByText(/Acessórios para Veículos/))
+    const category = await screen.findByText(/Acessórios para Veículos/)
     userEvent.click(category);
 
     expect(global.fetch).toHaveBeenCalledTimes(2);

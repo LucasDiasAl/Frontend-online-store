@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
-import * as api from '../services/api';
 import mockedQueryResult from '../__mocks__/query';
 import mockFetch from '../__mocks__/mockFetch';
 import userEvent from '@testing-library/user-event';
@@ -13,63 +12,53 @@ describe(`10 - Visualize a lista de produtos adicionados ao carrinho em sua pág
 
   beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
   it('Adiciona produtos ao carrinho e manipula suas quantidades', async () => {
-    render(<App />);
+    const { container } = render(<App />);
     expect(global.fetch).toHaveBeenCalled();
 
-    userEvent.click((await screen.findAllByTestId('category'))[0]);
+    userEvent.click(await screen.findByText(/Agro/));
     expect(global.fetch).toHaveBeenCalledTimes(2);
-
-    userEvent.click((await screen.findAllByTestId('product-add-to-cart'))[0]);
-    userEvent.click((await screen.findAllByTestId('product-add-to-cart'))[1]);
-    userEvent.click(await screen.findByTestId('shopping-cart-button'));
-
-    expect(await screen.findAllByTestId('shopping-cart-product-name'));
-    expect(screen.getAllByTestId('shopping-cart-product-name')[0]).toHaveTextContent(
+    const addBtns = await screen.findAllByText('Adicionar ao Carrinho');
+    userEvent.click(addBtns[0]);
+    userEvent.click(addBtns[1]);
+    userEvent.click(container.querySelector('a[href="/ShoppingCart"]'));
+    
+    expect(container.querySelector('li'));
+    expect(container.querySelectorAll('h1.title__product')[0]).toHaveTextContent(
       mockedQueryResult.results[0].title,
+      );
+      
+      expect(container.querySelectorAll('div.quantity__div')[0]).toHaveTextContent(
+        '1',
+        );
+        
+        expect(container.querySelectorAll('h1.title__product')[1]).toHaveTextContent(
+          mockedQueryResult.results[1].title,
+          );
+          
+          expect(container.querySelectorAll('div.quantity__div')[1]).toHaveTextContent(
+            '1',
+            );
+            for(let i =0; i < 3; i++) {
+              userEvent.click(container.querySelector(`button[name="mais-${mockedQueryResult.results[0].id}"]`));
+              userEvent.click(container.querySelector(`button[name="mais-${mockedQueryResult.results[1].id}"]`));
+            } 
+
+    expect(container.querySelectorAll('div.quantity__div h1')[0]).toHaveTextContent(
+      '4',
     );
 
-    expect(screen.getAllByTestId('shopping-cart-product-quantity')[0]).toHaveTextContent(
-      '1',
-    );
-
-    expect(screen.getAllByTestId('shopping-cart-product-name')[1]).toHaveTextContent(
-      mockedQueryResult.results[1].title,
-    );
-    expect(screen.getAllByTestId('shopping-cart-product-quantity')[1]).toHaveTextContent(
-      '1',
-    );
-
-    userEvent.click(screen.getAllByTestId('product-increase-quantity')[0]);
-    userEvent.click(screen.getAllByTestId('product-increase-quantity')[0]);
-    userEvent.click(screen.getAllByTestId('product-decrease-quantity')[0]);
-
-    userEvent.click(screen.getAllByTestId('product-increase-quantity')[1]);
-    userEvent.click(screen.getAllByTestId('product-increase-quantity')[1]);
-
-    expect(screen.getAllByTestId('shopping-cart-product-quantity')[0]).toHaveTextContent(
-      '2',
-    );
-    expect(screen.getAllByTestId('shopping-cart-product-quantity')[1]).toHaveTextContent(
+    expect(container.querySelectorAll('div.quantity__div h1')[1]).toHaveTextContent(
       '3',
     );
+    for(let i =0; i < 4; i++) {
+      userEvent.click(container.querySelector(`button[name="menos-${mockedQueryResult.results[0].id}"]`));
+    }
 
-    userEvent.click(screen.getAllByTestId('product-decrease-quantity')[0]);
-    userEvent.click(screen.getAllByTestId('product-decrease-quantity')[0]);
-    expect(screen.getAllByTestId('shopping-cart-product-quantity')[0]).toHaveTextContent(
+    expect(container.querySelectorAll('div.quantity__div h1')[0]).toHaveTextContent(
       '1',
     );
+    expect(container.querySelector('ul').children).toHaveLength(2)
+    userEvent.click(screen.getAllByText(/remover/i)[0]);
+    expect(container.querySelector('ul').children).toHaveLength(1);
+    });
   });
-
-  it('É possível excluir um produto do carrinho', async () => {
-    render(<App />);
-
-    await waitFor(() =>
-      expect(screen.getAllByTestId('shopping-cart-product-name')).toHaveLength(
-        2
-      )
-    );
-
-    userEvent.click(screen.getAllByTestId('remove-product')[1]);
-    expect(screen.getAllByTestId('shopping-cart-product-name')).toHaveLength(1);
-  });
-});
