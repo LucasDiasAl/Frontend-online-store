@@ -1,12 +1,12 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import App from '../App';
 import mockedQueryResult from '../__mocks__/query';
 import mockFetch from '../__mocks__/mockFetch';
 import userEvent from '@testing-library/user-event';
 
 describe(`7 - Redirecione para uma tela com a exibição detalhada ao clicar na exibição resumida de um produto`, () => {
-  beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
+  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
   it('Clicar no card de um produto leva à página com seus detalhes', async () => {
     render(<App />);
     expect(global.fetch).toHaveBeenCalled();

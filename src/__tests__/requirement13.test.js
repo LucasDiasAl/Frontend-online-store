@@ -5,11 +5,13 @@ import mockFetch from '../__mocks__/mockFetch';
 import userEvent from '@testing-library/user-event';
 
 describe(`13 - Mostre junto ao ícone do carrinho a quantidade de produtos dentro dele, em todas as telas em que ele aparece`, () => {
-  afterEach(() => {
-    global.fetch.mockClear();
-  });
+  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
 
-  beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
+  afterEach(() => {
+    if (global.fetch) {
+      global.fetch.mockClear();
+    }
+  });
   it('Avalia se a quantidade de produtos no carrinho da tela de listagem é renderizada corretamente', async () => {
     const { container } = render(<App />);
     expect(global.fetch).toHaveBeenCalled();

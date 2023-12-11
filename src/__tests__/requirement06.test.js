@@ -6,7 +6,7 @@ import mockFetch from '../__mocks__/mockFetch';
 import userEvent from '@testing-library/user-event';
 
 describe('6 - Selecione uma categoria e mostre somente os produtos daquela categoria', () => {
-  beforeEach(()=> jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
+  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
   it(`Filtra corretamente os produtos de uma página para exibir somente os daquela
       categoria`, async () => {
 

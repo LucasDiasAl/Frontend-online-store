@@ -6,7 +6,7 @@ import mockFetch from '../__mocks__/mockFetch';
 import userEvent from '@testing-library/user-event';
 
 describe(`14 - Limite a quantidade de produtos adicionados ao carrinho pela quantidade disponível em estoque`, () => {
-  beforeEach(()=> jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
+  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
   it(`Avalia se não é possível adicionar ao carrinho mais produtos do que o disponível em estoque`, async () => {
 
     const { container } = render(<App />);

@@ -8,7 +8,7 @@ import mockDetails from '../__mocks__/details';
 import userEvent from '@testing-library/user-event';
 
 describe(`11 - Avalie e comente acerca de um produto em sua tela de exibição detalhada`, () => {
-  beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
+  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
   beforeEach(() => localStorage.clear())
 
   it('Avalia se é possível realizar uma avaliação na tela de detalhes de um produto', async () => {

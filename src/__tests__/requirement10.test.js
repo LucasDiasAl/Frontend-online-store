@@ -6,11 +6,16 @@ import mockFetch from '../__mocks__/mockFetch';
 import userEvent from '@testing-library/user-event';
 
 describe(`10 - Visualize a lista de produtos adicionados ao carrinho em sua página e permita a manipulação da sua quantidade`, () => {
-  afterEach(() => {
-    global.fetch.mockClear();
+  beforeEach(() => {
+    global.fetch = jest.fn().mockImplementation(mockFetch);
   });
 
-  beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
+  afterEach(() => {
+    if (global.fetch) {
+      global.fetch.mockClear();
+    }
+  });
+
   it('Adiciona produtos ao carrinho e manipula suas quantidades', async () => {
     const { container } = render(<App />);
     expect(global.fetch).toHaveBeenCalled();

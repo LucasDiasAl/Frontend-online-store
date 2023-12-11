@@ -5,7 +5,7 @@ import mockedCategoriesResult from '../__mocks__/categories';
 import mockFetch from '../__mocks__/mockFetch';
 
 describe(`4 - Liste as categorias de produtos disponíveis via API na página principal`, () => {
-  beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
+  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
   it(`Exibe as categorias retornadas pela API na página de listagem de
       produtos`, async () => {
     render(<App />);

@@ -12,7 +12,7 @@ class ResizeObserver {
 }
 
 describe(`12 - Finalize a compra vendo um resumo dela, preenchendo os seus dados e escolhendo a forma de pagamento`, () => {
-  beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
+  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
   window.ResizeObserver = ResizeObserver;
   it('Avalia se, na página de checkout, existe um resumo do pedido', async () => {
     const { container } = render(<App />);

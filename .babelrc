@@ -1,0 +1,7 @@
+{
+  "presets": [ "@babel/preset-env", "@babel/preset-react"],
+  "ignore": ["**/*.css"]
+}
+//preset-env para resolver problemas dos testes nao conseguirem importar fora de modulo
+//preset-react para para a tranformaçao do jsx para um sintaxe legivel pelo node
+//"ignore" para que o Babel não tente traduzir os arquivos CSS, evitando problemas relacionados à tradução desses tipos de arquivos.

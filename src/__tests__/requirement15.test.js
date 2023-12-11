@@ -5,7 +5,7 @@ import mockFetch from '../__mocks__/mockFetch';
 import userEvent from '@testing-library/user-event';
 
 describe('15 - Mostre quais produtos tem o frete grátis', () => {
-  beforeEach(()=> jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
+  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
   it('Exibe corretmente a informação de frete grátis dos produtos', async () => {
     render(<App />);
     expect(global.fetch).toHaveBeenCalled();

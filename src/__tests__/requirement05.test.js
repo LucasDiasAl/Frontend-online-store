@@ -8,9 +8,16 @@ import App from '../App';
 import mockFetch from '../__mocks__/mockFetch';
 import userEvent from '@testing-library/user-event';
 import searchedQuery from '../__mocks__/searchQuery';
+import mockFetchNull from '../__mocks__/mockFetchNull';
 
-describe(`5 - Liste os produtos buscados por termos, com os dados resumidos, associados a esses termos`, () => {  
+describe(`5 - Liste os produtos buscados por termos, com os dados resumidos, associados a esses termos`, () => {
+  afterEach(() => {
+    if (global.fetch) {
+      global.fetch.mockClear();
+    }
+  });
   it('Exibe a mensagem "Nenhum produto foi encontrado" caso a busca não retorne produtos', async () => {
+    global.fetch = jest.fn().mockImplementation(mockFetchNull)
     render(<App />);
 
     userEvent.clear(screen.getByPlaceholderText('Search'));
@@ -20,7 +27,7 @@ describe(`5 - Liste os produtos buscados por termos, com os dados resumidos, ass
   })
   
   it(`Exibe todos os produtos retornados pela API, dado um determinado filtro`, async () => {
-    jest.spyOn(global, 'fetch').mockImplementation(mockFetch);
+    global.fetch = jest.fn().mockImplementation(mockFetch)
     render(<App />);
    
     userEvent.type(

@@ -6,7 +6,7 @@ import mockFetch from '../__mocks__/mockFetch';
 import userEvent from '@testing-library/user-event';
 
 describe('8 - Adicione produtos a partir da tela de listagem de produtos', () => {
-  beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
+  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
   it('Adiciona um produto ao carrinho a partir da tela principal', async () => {
     const { container } = render(<App />);
     expect(global.fetch).toHaveBeenCalled();
