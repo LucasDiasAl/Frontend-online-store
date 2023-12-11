@@ -9,28 +9,21 @@ describe(`14 - Limite a quantidade de produtos adicionados ao carrinho pela quan
   beforeEach(()=> jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
   it(`Avalia se não é possível adicionar ao carrinho mais produtos do que o disponível em estoque`, async () => {
 
-    render(<App />);
+    const { container } = render(<App />);
     expect(global.fetch).toHaveBeenCalled();
-    userEvent.click((await screen.findAllByTestId('category'))[0]);
+    userEvent.click(await screen.findByText(/Agro/));
     expect(global.fetch).toHaveBeenCalledTimes(2);
-    userEvent.click((await screen.findAllByTestId('product-add-to-cart'))[1]);
-    userEvent.click((await screen.findByTestId('shopping-cart-button')));
-    expect((await screen.findAllByTestId('shopping-cart-product-name')));
-    expect((await screen.findAllByTestId('shopping-cart-product-name'))[0]).toHaveTextContent(
-      mockedQueryResult.results[1].title,
-    );
-    await waitFor(async () => expect((await screen.findAllByTestId('shopping-cart-product-quantity'))[0]).toHaveTextContent(
+    userEvent.click((await screen.findAllByText(/adicionar ao carrinho/i))[1]);
+    userEvent.click(container.querySelector('a[href="/ShoppingCart"]'));
+    expect((await screen.findByText(/Diário De Anne Frank Livro Novo Lacrado Com Fotos Autenticas/))).toBeInTheDocument();
+    await waitFor(async () => expect(container.querySelector('div.quantity__div')).toHaveTextContent(
       '1',
     ))
-    userEvent.click((await screen.findAllByTestId('product-increase-quantity'))[0]);
-    userEvent.click((await screen.findAllByTestId('product-increase-quantity'))[0]);
-    userEvent.click((await screen.findAllByTestId('product-increase-quantity'))[0]);
-    userEvent.click((await screen.findAllByTestId('product-increase-quantity'))[0]);
-    userEvent.click((await screen.findAllByTestId('product-increase-quantity'))[0]);
-    userEvent.click((await screen.findAllByTestId('product-increase-quantity'))[0]);
-    userEvent.click((await screen.findAllByTestId('product-increase-quantity'))[0]);
-
-    expect((await screen.findAllByTestId('shopping-cart-product-quantity'))[0]).toHaveTextContent(
+    const id = mockedQueryResult.results[1].id;
+    for (let i = 0; i < 5; i++) {
+      userEvent.click(container.querySelector(`button[name="mais-${id}"]`));
+    }
+    expect(container.querySelector('div.quantity__div')).toHaveTextContent(
       mockedQueryResult.results[1].available_quantity,
     );
   });

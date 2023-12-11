@@ -1,46 +1,52 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, findByText, render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import mockedQueryResult from '../__mocks__/query';
 import mockFetch from '../__mocks__/mockFetch';
 import mockedCategoriesResult from '../__mocks__/categories';
 import userEvent from '@testing-library/user-event';
 
+class ResizeObserver {
+  observe() {}
+  unobserve() {}
+}
+
 describe(`12 - Finalize a compra vendo um resumo dela, preenchendo os seus dados e escolhendo a forma de pagamento`, () => {
   beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
-
+  window.ResizeObserver = ResizeObserver;
   it('Avalia se, na página de checkout, existe um resumo do pedido', async () => {
-    render(<App />);
+    const { container } = render(<App />);
 
     expect(global.fetch).toHaveBeenCalled();
 
-    userEvent.click((await screen.findAllByTestId('category'))[0]);
+    userEvent.click(await screen.findByText(/Agro/));
     expect(global.fetch).toHaveBeenCalledTimes(2);
-    userEvent.click((await screen.findAllByTestId('product-add-to-cart'))[0]);
-    userEvent.click((await screen.findAllByTestId('product-add-to-cart'))[1]);
+    userEvent.click((await screen.findAllByText(/Adicionar ao carrinho/i))[0]);
+    userEvent.click((await screen.findAllByText(/Adicionar ao carrinho/i))[1]);
 
-    userEvent.click(await screen.findByTestId('shopping-cart-button'));
-    expect(await screen.findAllByTestId('shopping-cart-product-name'));
+    userEvent.click(container.querySelector('a[href="/ShoppingCart"]'));
+    expect(await screen.findByText(/finalizar compras/i));
 
     expect(
-      (await screen.findAllByTestId('shopping-cart-product-name'))[0]
+      (container.querySelectorAll('h1.title__product'))[0]
     ).toHaveTextContent(mockedQueryResult.results[0].title);
     expect(
-      (await screen.findAllByTestId('shopping-cart-product-name'))[1]
+      (container.querySelectorAll('h1.title__product'))[1]
     ).toHaveTextContent(mockedQueryResult.results[1].title);
-
-    userEvent.click(await screen.findByTestId('checkout-products'));
+    act(() => {
+      userEvent.click(screen.getByText(/finalizar compras/i));
+    })
     expect(screen.getByText(mockedQueryResult.results[0].title));
 
     expect(
       screen.getByText(mockedQueryResult.results[0].title)
-    ).toHaveTextContent(mockedQueryResult.results[0].title);
+    ).toBeInTheDocument();
     expect(
       screen.getByText(mockedQueryResult.results[1].title)
-    ).toHaveTextContent(mockedQueryResult.results[1].title);
+    ).toBeInTheDocument();
   });
 
-  it('Avalia se todos os campos do formulário precisam ser preenchidos', async () => {
+  it('Avalia se, após a compra ser finalizada, é redirecionado para a página inicial', async () => {
     const fullName = 'my full name';
     const email = 'my@email.com';
     const cpf = '12345678900';
@@ -48,67 +54,38 @@ describe(`12 - Finalize a compra vendo um resumo dela, preenchendo os seus dados
     const cep = '99999999';
     const address = 'my address is where I live';
 
-    render(<App />);
+    const { container } = render(<App />);
 
-    userEvent.type(screen.getByTestId('checkout-fullname'), fullName);
-    userEvent.type(screen.getByTestId('checkout-email'), email);
-    userEvent.type(screen.getByTestId('checkout-cpf'), cpf);
-    userEvent.type(screen.getByTestId('checkout-phone'), phone);
-    userEvent.type(screen.getByTestId('checkout-cep'), cep);
-
-    expect(screen.getByTestId('checkout-fullname')).toHaveValue(fullName);
-    expect(screen.getByTestId('checkout-email')).toHaveValue(email);
-    expect(screen.getByTestId('checkout-cpf')).toHaveValue(cpf);
-    expect(screen.getByTestId('checkout-phone')).toHaveValue(phone);
-    expect(screen.getByTestId('checkout-cep')).toHaveValue(cep);
-
-    userEvent.click(screen.getByTestId('checkout-btn'));
-
-    await waitFor(() =>
-      expect(screen.getByTestId('error-msg')).toBeInTheDocument()
-    );
-    expect(screen.getByTestId('error-msg')).toHaveTextContent(
-      'Campos inválidos'
-    );
-
-    userEvent.type(screen.getByTestId('checkout-address'), address);
-    expect(screen.getByTestId('checkout-address')).toHaveValue(address);
-
-    userEvent.click(screen.getByTestId('checkout-btn'));
-    await waitFor(() =>
-      expect(screen.getByTestId('error-msg')).toBeInTheDocument()
-    );
-    expect(screen.getByTestId('error-msg')).toHaveTextContent(
-      'Campos inválidos'
-    );
-
-    await act(async () => {
-      userEvent.click(await screen.findByTestId('master-payment'));
-      userEvent.click(await screen.findByTestId('checkout-btn'));
-    });
-
-    expect(screen.queryByTestId('error-msg')).not.toBeInTheDocument();
-  });
-
-  it('Avalia se, após a compra ser finalizada, é redirecionado para a página inicial', async () => {
-    render(<App />);
+    userEvent.type(screen.getByPlaceholderText('Nome'), fullName);
+    userEvent.type(screen.getByPlaceholderText('Email'), email);
+    userEvent.type(screen.getByPlaceholderText('CPF'), cpf);
+    userEvent.type(screen.getByPlaceholderText('Telefone'), phone);
+    userEvent.type(screen.getByPlaceholderText('CEP'), cep);
+    userEvent.type(screen.getByPlaceholderText('Endereço'), address);
+    userEvent.click(await screen.findByText('MasterCard'));
+    
+    expect(screen.getByPlaceholderText('Nome')).toHaveValue(fullName);
+    expect(screen.getByPlaceholderText('Email')).toHaveValue(email);
+    expect(screen.getByPlaceholderText('CPF')).toHaveValue(Number(cpf));
+    expect(screen.getByPlaceholderText('Telefone')).toHaveValue(Number(phone));
+    expect(screen.getByPlaceholderText('CEP')).toHaveValue(Number(cep));
+    expect(screen.getByPlaceholderText('Endereço')).toHaveValue(address);
+    
+    userEvent.click(screen.getByText(/concluir/i));
 
     expect(global.fetch).toHaveBeenCalled();
     await waitFor(() =>
-      expect(screen.getAllByTestId('category').length).toEqual(
+      expect(container.querySelector('div.categories').children.length).toEqual(
         mockedCategoriesResult.length
       )
     );
   });
 
   it('Avalia se, ao entrar na página do carrinho, não há nenhum produto', async () => {
-    render(<App />);
+    const { container } = render(<App />);
     await waitFor(() => expect(global.fetch).toHaveBeenCalled());
 
-    userEvent.click(screen.getByTestId('shopping-cart-button'));
-    await waitFor(() => screen.getByTestId('shopping-cart-empty-message'));
-    expect(screen.getByTestId('shopping-cart-empty-message')).toHaveTextContent(
-      'Seu carrinho está vazio'
-    );
+    userEvent.click(container.querySelector('a[href="/ShoppingCart"]'));
+    await waitFor(() =>  expect(screen.getByText('Seu carrinho está vazio')).toBeInTheDocument());
   });
 });

@@ -32,6 +32,7 @@ class Form extends React.Component {
 
   handleButton = ({ target: { value } }) => {
     const { email, avaliation, message } = this.state;
+    const { updateComents } = this.props;
     const invalidInputs = this.validation();
     if (invalidInputs) {
       this.setState({ invalid: true });
@@ -43,6 +44,7 @@ class Form extends React.Component {
         ['text', message],
         ['rating', avaliation]]);
       localStorage.setItem([value], JSON.stringify([...reviews, avalObj]));
+      updateComents(avalObj);
       this.setState({ email: '',
         avaliation: '',
         message: '',
@@ -144,6 +146,7 @@ class Form extends React.Component {
 
 Form.propTypes = {
   prodId: PropTypes.string,
+  updateComents: PropTypes.func.isRequired,
 };
 Form.defaultProps = {
   prodId: undefined,

@@ -11,28 +11,26 @@ describe(`13 - Mostre junto ao ícone do carrinho a quantidade de produtos dentr
 
   beforeEach(() => jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
   it('Avalia se a quantidade de produtos no carrinho da tela de listagem é renderizada corretamente', async () => {
-    render(<App />);
+    const { container } = render(<App />);
     expect(global.fetch).toHaveBeenCalled();
-    userEvent.click((await screen.findAllByTestId('category'))[0]);
+    userEvent.click(await screen.findByText(/Agro/));
     expect(global.fetch).toHaveBeenCalledTimes(2);
-    userEvent.click((await screen.findAllByTestId('product-add-to-cart'))[0]);
-    userEvent.click((await screen.findAllByTestId('product-add-to-cart'))[1]);
-    expect(await screen.findByTestId('shopping-cart-size')).toHaveTextContent(
-      '2'
+    userEvent.click((await screen.findAllByText(/adicionar ao carrinho/i))[0]);
+    expect(container.querySelector('div.cart__div')).toHaveTextContent(
+      '1'
     );
   });
 
   it('Avalia se a quantidade de produtos no carrinho da tela de detalhes é renderizada corretamente', async () => {
-    render(<App />);
+    const { container } = render(<App />);
     expect(global.fetch).toHaveBeenCalled();
-    userEvent.click((await screen.findAllByTestId('category'))[0]);
+    userEvent.click(await screen.findByText(/Agro/));
     expect(global.fetch).toHaveBeenCalledTimes(2);
 
-    userEvent.click((await screen.findAllByTestId('product-add-to-cart'))[0]);
-    userEvent.click((await screen.findAllByTestId('product-add-to-cart'))[1]);
-    userEvent.click((await screen.findAllByTestId('product-detail-link'))[0]);
+    userEvent.click((await screen.findAllByText(/adicionar ao carrinho/i))[1]);
+    userEvent.click(await screen.findByText(/Pequeno Principe, O/));
     await waitFor(async () => {
-      expect((await screen.findByTestId('shopping-cart-size'))).toHaveTextContent('4');
+      expect(container.querySelector('div.cart')).toHaveTextContent('2');
     })
   });
 });

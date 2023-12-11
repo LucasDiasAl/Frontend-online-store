@@ -32,6 +32,11 @@ class Products extends React.Component {
     });
   }
 
+  updateComents = (newReview) => {
+    const { avaliaçoes } = this.state;
+    this.setState({ avaliaçoes: [...avaliaçoes, newReview] });
+  };
+
   getAvaliation = () => {
     const { product } = this.state;
     const reviews = JSON.parse(localStorage.getItem(product.id)) || [];
@@ -91,6 +96,7 @@ class Products extends React.Component {
           </div>
           <Form
             prodId={ product.id }
+            updateComents={ this.updateComents }
           />
 
           {avaliaçoes.length !== 0

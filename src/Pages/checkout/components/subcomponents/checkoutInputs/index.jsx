@@ -45,7 +45,7 @@ export default class CheckoutInputs extends React.Component {
               className="input"
               value={ name }
               onChange={ handleInput }
-              placeholder="Name"
+              placeholder="Nome"
               required
             />
           </Form.Control>
