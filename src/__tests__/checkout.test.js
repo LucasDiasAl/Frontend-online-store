@@ -1,5 +1,10 @@
 import React from 'react';
-import { act, findByText, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import App from '../App';
 import mockedQueryResult from '../__mocks__/query';
 import mockFetch from '../__mocks__/mockFetch';
@@ -11,8 +16,8 @@ class ResizeObserver {
   unobserve() {}
 }
 
-describe(`12 - Finalize a compra vendo um resumo dela, preenchendo os seus dados e escolhendo a forma de pagamento`, () => {
-  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
+describe(`Teste a pagina de checkout`, () => {
+  beforeEach(() => (global.fetch = jest.fn().mockImplementation(mockFetch)));
   window.ResizeObserver = ResizeObserver;
   it('Avalia se, na página de checkout, existe um resumo do pedido', async () => {
     const { container } = render(<App />);
@@ -28,14 +33,14 @@ describe(`12 - Finalize a compra vendo um resumo dela, preenchendo os seus dados
     expect(await screen.findByText(/finalizar compras/i));
 
     expect(
-      (container.querySelectorAll('h1.title__product'))[0]
+      container.querySelectorAll('h1.title__product')[0]
     ).toHaveTextContent(mockedQueryResult.results[0].title);
     expect(
-      (container.querySelectorAll('h1.title__product'))[1]
+      container.querySelectorAll('h1.title__product')[1]
     ).toHaveTextContent(mockedQueryResult.results[1].title);
     act(() => {
       userEvent.click(screen.getByText(/finalizar compras/i));
-    })
+    });
     expect(screen.getByText(mockedQueryResult.results[0].title));
 
     expect(
@@ -63,14 +68,14 @@ describe(`12 - Finalize a compra vendo um resumo dela, preenchendo os seus dados
     userEvent.type(screen.getByPlaceholderText('CEP'), cep);
     userEvent.type(screen.getByPlaceholderText('Endereço'), address);
     userEvent.click(await screen.findByText('MasterCard'));
-    
+
     expect(screen.getByPlaceholderText('Nome')).toHaveValue(fullName);
     expect(screen.getByPlaceholderText('Email')).toHaveValue(email);
     expect(screen.getByPlaceholderText('CPF')).toHaveValue(Number(cpf));
     expect(screen.getByPlaceholderText('Telefone')).toHaveValue(Number(phone));
     expect(screen.getByPlaceholderText('CEP')).toHaveValue(Number(cep));
     expect(screen.getByPlaceholderText('Endereço')).toHaveValue(address);
-    
+
     userEvent.click(screen.getByText(/concluir/i));
 
     expect(global.fetch).toHaveBeenCalled();
@@ -86,6 +91,8 @@ describe(`12 - Finalize a compra vendo um resumo dela, preenchendo os seus dados
     await waitFor(() => expect(global.fetch).toHaveBeenCalled());
 
     userEvent.click(container.querySelector('a[href="/ShoppingCart"]'));
-    await waitFor(() =>  expect(screen.getByText('Seu carrinho está vazio')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText('Seu carrinho está vazio')).toBeInTheDocument()
+    );
   });
 });
