@@ -38,7 +38,6 @@ export default class CheckoutForm extends React.Component {
             <button
               type="submit"
               className="checkout__btn"
-              data-testid="checkout-btn"
               onClick={ validation }
             >
               Concluir

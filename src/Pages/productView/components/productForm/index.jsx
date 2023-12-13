@@ -32,6 +32,7 @@ class Form extends React.Component {
 
   handleButton = ({ target: { value } }) => {
     const { email, avaliation, message } = this.state;
+    const { updateComents } = this.props;
     const invalidInputs = this.validation();
     if (invalidInputs) {
       this.setState({ invalid: true });
@@ -43,6 +44,7 @@ class Form extends React.Component {
         ['text', message],
         ['rating', avaliation]]);
       localStorage.setItem([value], JSON.stringify([...reviews, avalObj]));
+      updateComents(avalObj);
       this.setState({ email: '',
         avaliation: '',
         message: '',
@@ -63,7 +65,6 @@ class Form extends React.Component {
             name="email"
             className="email__input"
             placeholder="Email"
-            data-testid="product-detail-email"
             value={ email }
             onChange={ this.handleCheck }
             required
@@ -74,7 +75,6 @@ class Form extends React.Component {
               <input
                 type="radio"
                 name="avaliation"
-                data-testid="1-rating"
                 id="avaliation1"
                 value={ 1 }
                 onChange={ this.handleCheck }
@@ -85,7 +85,6 @@ class Form extends React.Component {
               <input
                 type="radio"
                 name="avaliation"
-                data-testid="2-rating"
                 value={ 2 }
                 id="avaliation2"
                 onChange={ this.handleCheck }
@@ -96,7 +95,6 @@ class Form extends React.Component {
               <input
                 type="radio"
                 name="avaliation"
-                data-testid="3-rating"
                 value={ 3 }
                 id="avaliation3"
                 onChange={ this.handleCheck }
@@ -107,7 +105,6 @@ class Form extends React.Component {
               <input
                 type="radio"
                 name="avaliation"
-                data-testid="4-rating"
                 value={ 4 }
                 id="avaliation4"
                 onChange={ this.handleCheck }
@@ -118,7 +115,6 @@ class Form extends React.Component {
               <input
                 type="radio"
                 name="avaliation"
-                data-testid="5-rating"
                 value={ 5 }
                 id="avaliation5"
                 onChange={ this.handleCheck }
@@ -130,7 +126,6 @@ class Form extends React.Component {
             name="message"
             cols="30"
             rows="10"
-            data-testid="product-detail-evaluation"
             placeholder="Comentário"
             value={ message }
             onChange={ this.handleInput }
@@ -138,7 +133,6 @@ class Form extends React.Component {
           <button
             type="button"
             className="btn__review"
-            data-testid="submit-review-btn"
             value={ prodId }
             onClick={ this.handleButton }
           >
@@ -152,6 +146,7 @@ class Form extends React.Component {
 
 Form.propTypes = {
   prodId: PropTypes.string,
+  updateComents: PropTypes.func.isRequired,
 };
 Form.defaultProps = {
   prodId: undefined,

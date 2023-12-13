@@ -21,7 +21,6 @@ class Category extends Component {
               />
               <label
                 htmlFor={ name }
-                data-testid="category"
               >
                 { name }
               </label>

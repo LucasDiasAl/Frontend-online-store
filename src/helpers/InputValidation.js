@@ -11,7 +11,6 @@ class InputValidation {
   validateString = (value, regexType) => {
     const regex = this.allRegex[regexType];
     const validationResult = !regex.test(value);
-    console.log(value, regexType, validationResult);
     return validationResult;
   };
 }

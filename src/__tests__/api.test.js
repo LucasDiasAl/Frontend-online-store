@@ -4,13 +4,15 @@ import mockFetch from '../__mocks__/mockFetch';
 
 describe('1 - Implemente o módulo de acesso à api do Mercado Livre', () => {
 
+  beforeEach(() => global.fetch = jest.fn().mockImplementation(mockFetch));
+
   afterEach(() => {
-    global.fetch.mockClear();
+    if (global.fetch) {
+      global.fetch.mockClear();
+    }
   });
 
-  beforeEach(()=> jest.spyOn(global, 'fetch').mockImplementation(mockFetch));
   it('Implementa a função `getCategories`', () => {
-
     return api.getCategories().then((categories) => {
       expect(global.fetch).toHaveBeenCalled();
       expect(global.fetch).toHaveBeenCalledWith(
@@ -29,7 +31,7 @@ describe('1 - Implemente o módulo de acesso à api do Mercado Livre', () => {
       json: () => Promise.resolve(successResponseBody),
     });
 
-    jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
+    global.fetch.mockImplementation(() => mockFetchPromise);
 
     return api.getProductsFromCategoryAndQuery(categoryId, query).then((products) => {
       expect(global.fetch).toHaveBeenCalled();
